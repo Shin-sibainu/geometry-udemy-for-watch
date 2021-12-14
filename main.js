@@ -29,9 +29,41 @@ const sphereGeometry = new THREE.SphereGeometry(0.5, 16);
 const planeGeometry = new THREE.PlaneGeometry(10, 10, 32, 32);
 const torusGeometry = new THREE.TorusGeometry(0.5, 0.2);
 
+//カスタムジオメトリ
+const geometry = new THREE.BufferGeometry();
+
+const count = 50;
+const positionArray = new Float32Array(count * 3 * 3);
+
+for (let i = 0; i < count * 3 * 3; i++) {
+  positionArray[i] = (Math.random() - 0.5) * 2;
+}
+
+const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+geometry.setAttribute("position", positionAttribute);
+
+// const positionArray = new Float32Array([0, 0, 0, 0, 1, 0, 1, 0, 0]);
+// console.log(positionArray);
+
+// const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+
+// geometry.setAttribute("position", positionAttribute);
+// positionArray[0] = 0;
+// positionArray[0] = 0;
+// positionArray[0] = 0;
+
+// positionArray[0] = 0;
+// positionArray[0] = 1;
+// positionArray[0] = 0;
+
+// positionArray[0] = 1;
+// positionArray[0] = 0;
+// positionArray[0] = 0;
+
 //マテリアル
-const material = new THREE.MeshNormalMaterial();
-// material.wireframe = true;
+const material = new THREE.MeshBasicMaterial();
+material.wireframe = true;
+material.color.set("green");
 
 //メッシュ化
 const box = new THREE.Mesh(boxGeometry, material);
@@ -40,11 +72,14 @@ sphere.position.x = 1.5;
 const plane = new THREE.Mesh(planeGeometry, material);
 // plane.position.x = -1.5;
 const torus = new THREE.Mesh(torusGeometry, material);
+
+const buffer = new THREE.Mesh(geometry, material);
 torus.position.x = -1.5;
 plane.rotation.x = Math.PI * 0.5;
 plane.position.y = -0.5;
 
-scene.add(box, sphere, plane, torus);
+// scene.add(box, sphere, plane, torus);
+scene.add(buffer);
 
 //ライト
 // const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
